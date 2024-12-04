@@ -18,10 +18,13 @@ core-testing = "2.1.0"
 test-runner = "1.1.1"
 espresso = "3.1.1"
 core-ktx-test = "1.2.0"
+hilt = "2.51.1"
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
+hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt"}
+hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt"}
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
@@ -50,4 +53,6 @@ core-ktx-test = { module = "androidx.test:core-ktx", version.ref = "core-ktx-tes
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
+kotlin-kapt = { id = "kotlin-kapt" }
 kotlin-parcelize = { id = "kotlin-parcelize"}

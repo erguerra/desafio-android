@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -52,9 +54,11 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.material)
 
-    implementation(libs.lifecycle.viewmodel.ktx)
+    // Dependency Injection
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
+
     implementation(libs.lifecycle.livedata.ktx)
-    implementation(libs.lifecycle.runtime.ktx)
 
     implementation(libs.coroutines.core)
     implementation(libs.coroutines.android)
@@ -79,4 +83,8 @@ dependencies {
     androidTestImplementation(libs.test.runner)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.core.ktx.test)
+}
+
+kapt {
+    correctErrorTypes = true
 }
