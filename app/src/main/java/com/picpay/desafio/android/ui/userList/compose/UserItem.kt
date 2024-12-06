@@ -12,7 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
+import coil.compose.SubcomposeAsyncImageContent
 import com.picpay.desafio.android.ui.theme.PicPayTheme
 import com.picpay.desafio.android.ui.theme.colorAccent
 import com.picpay.desafio.android.ui.theme.colorPrimaryDark
@@ -41,13 +45,39 @@ fun UserItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(modifier = Modifier.size(52.dp)) {
-            AsyncImage(
+            SubcomposeAsyncImage(
                 model = avatar,
                 contentDescription = null,
-                // TODO: Add Loading State
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(CircleShape)
+                loading = {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(color = colorAccent)
+                    }
+                },
+                error = {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Face,
+                            contentDescription = "Error",
+                            tint = colorAccent,
+                            modifier = Modifier.size(52.dp)
+                        )
+                    }
+                },
+                success =  {
+                    SubcomposeAsyncImageContent(
+                        modifier = Modifier.fillMaxSize().clip(CircleShape)
+                    )
+                }
             )
         }
 
