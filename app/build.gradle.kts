@@ -42,7 +42,6 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
         compose = true
     }
 
@@ -63,14 +62,13 @@ dependencies {
     implementation(libs.compose.activity)
     implementation(libs.compose.viewmodel)
     implementation(libs.compose.tooling.preview)
+
     debugImplementation(libs.compose.tooling)
 
 
     implementation(libs.kotlin.stdlib)
 
     implementation(libs.core.ktx)
-    implementation(libs.appcompat)
-    implementation(libs.constraintlayout)
     implementation(libs.material)
 
     // Dependency Injection
@@ -84,22 +82,17 @@ dependencies {
     ksp(libs.room.compiler)
 
     implementation(libs.lifecycle.viewmodel.ktx)
-    implementation(libs.activity.ktx)
 
     implementation(libs.coroutines.core)
     implementation(libs.coroutines.android)
-    testImplementation(libs.coroutines.test)
 
     implementation(libs.gson)
 
     implementation(libs.retrofit)
-    implementation(libs.retrofit.adapter.rxjava2)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.okhttp)
     implementation(libs.okhttp.mockwebserver)
 
-    implementation(libs.picasso)
-    implementation(libs.circleimageview)
     implementation(libs.coil)
 
     testImplementation(libs.junit)
