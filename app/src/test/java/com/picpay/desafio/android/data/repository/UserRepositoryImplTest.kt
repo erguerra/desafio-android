@@ -14,7 +14,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.mockito.kotlin.any
+import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoMoreInteractions
@@ -43,17 +45,18 @@ class UserRepositoryImplTest : UserFixture {
     }
 
     @Test
-    fun `getUsers should emit remote users when data is available but cache is invalid`() = runTest {
-        givenAUserRepository(
-            localUsers = locallyPersistedUsers(),
-            remoteUsers = remoteUsers()
-        )
-        whenGettingUsers()
-        thenRepositoryShouldReturnAFlowWithADomainUserList()
-        verify(localDataSource).getAllUsers()
-        verify(remoteDataSource).getUsers()
-        verify(localDataSource).saveUsers(any())
-    }
+    fun `getUsers should emit remote users when data is available but cache is invalid`() =
+        runTest {
+            givenAUserRepository(
+                localUsers = locallyPersistedUsers(),
+                remoteUsers = remoteUsers()
+            )
+            whenGettingUsers()
+            thenRepositoryShouldReturnAFlowWithADomainUserList()
+            verify(localDataSource).getAllUsers()
+            verify(remoteDataSource).getUsers()
+            verify(localDataSource).saveUsers(any())
+        }
 
     @Test
     fun `getUsers should fetch and cache users when local data is empty`() = runTest {
@@ -109,11 +112,13 @@ class UserRepositoryImplTest : UserFixture {
             on { getAllUsers() } doReturn flow { emit(localUsers.orEmpty()) }
         }
 
-        remoteDataSource = mock {
-            on { getUsers() } doReturn if (fetchError != null) {
-                flow { throw IOException("Simulated error") }
-            } else {
-                flow { emit(remoteUsers.orEmpty()) }
+        remoteDataSource = if (fetchError == null) mock {
+            onBlocking { getUsers() } doReturn remoteUsers.orEmpty()
+        } else {
+            mock {
+                onBlocking { getUsers() } doAnswer  {
+                    throw fetchError
+                }
             }
         }
         sut = UserRepositoryImpl(

@@ -25,7 +25,7 @@ class UserRepositoryImpl @Inject constructor(
         localDataSource.getAllUsers().catch {
             emit(emptyList())
         }.collect { allUsers ->
-            if(allUsers.isEmpty() || allUsers.any { needsUpdate(it.timestamp)}) {
+            if (allUsers.isEmpty() || allUsers.any { needsUpdate(it.timestamp) }) {
                 fetchAndCacheUsers()
             } else {
                 emit(allUsers.map(userMapper::toDomain))
@@ -34,12 +34,11 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun fetchAndCacheUsers() {
-        remoteDataSource.getUsers().collect { remoteUsers ->
-            localDataSource.saveUsers(remoteUsers.map(userMapper::toEntity))
-        }
+        val remoteUsers = remoteDataSource.getUsers()
+        localDataSource.saveUsers(remoteUsers.map(userMapper::toEntity))
     }
 
-    private fun needsUpdate(lastUpdated: Long) : Boolean {
+    private fun needsUpdate(lastUpdated: Long): Boolean {
         return System.currentTimeMillis() - lastUpdated > cacheLifeTime
     }
 }

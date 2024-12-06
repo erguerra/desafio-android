@@ -23,16 +23,13 @@ class UsersRemoteDataSourceTest : UserFixture {
 
     private lateinit var sut: UsersRemoteDataSource
     private lateinit var picPayService: PicPayService
-    private var result: Flow<List<UserResponse>> = emptyFlow()
+    private var result: Result<List<UserResponse>>? = null
 
     @Test
     fun `getUsers should call picPayService and emit users list`() = runTest {
         givenARemoteDataSource(response = remoteUsers())
         whenFetchingUsers()
-
-        result.collect { emittedUsers ->
-            assertEquals(remoteUsers(), emittedUsers)
-        }
+        assertEquals(Result.success(remoteUsers()), result)
         verify(picPayService).getUsers()
     }
 
@@ -42,9 +39,7 @@ class UsersRemoteDataSourceTest : UserFixture {
         givenARemoteDataSource(response = emptyList())
         whenFetchingUsers()
 
-        result.collect {
-            assertEquals(emptyList(), it)
-        }
+        assertEquals(Result.success(emptyList()), result)
         verify(picPayService).getUsers()
     }
 
@@ -53,10 +48,7 @@ class UsersRemoteDataSourceTest : UserFixture {
         val exception = IOException("Network error")
         givenARemoteDataSource(serviceError = exception)
         whenFetchingUsers()
-
-        result.catch {
-            assertEquals("Network error", it.message)
-        }.collect { /* Empty collect to start the flow*/ }
+        assertEquals(Result.failure(exception), result)
         verify(picPayService).getUsers()
     }
 
@@ -83,7 +75,9 @@ class UsersRemoteDataSourceTest : UserFixture {
 
     }
 
-    private fun whenFetchingUsers() {
-        result = sut.getUsers()
+    private suspend fun whenFetchingUsers() {
+        result = kotlin.runCatching {
+            sut.getUsers()
+        }
     }
 }

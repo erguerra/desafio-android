@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.room)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -42,6 +43,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 
     room {
@@ -51,6 +53,18 @@ android {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+
+    val composeBom = platform(libs.compose.bom)
+    implementation(composeBom)
+
+    // Compose
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.activity)
+    implementation(libs.compose.viewmodel)
+    implementation(libs.compose.tooling.preview)
+    debugImplementation(libs.compose.tooling)
+
 
     implementation(libs.kotlin.stdlib)
 
@@ -62,6 +76,7 @@ dependencies {
     // Dependency Injection
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
 
     // Room
     implementation(libs.room.runtime)
@@ -85,6 +100,7 @@ dependencies {
 
     implementation(libs.picasso)
     implementation(libs.circleimageview)
+    implementation(libs.coil)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.test)
@@ -100,4 +116,5 @@ dependencies {
     androidTestImplementation(libs.room.testing)
     androidTestImplementation(libs.kotlin.test)
     androidTestImplementation(libs.coroutines.test)
+    androidTestImplementation(composeBom)
 }

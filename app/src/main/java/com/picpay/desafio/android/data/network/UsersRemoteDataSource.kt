@@ -6,6 +6,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -14,8 +15,7 @@ class UsersRemoteDataSource @Inject constructor(
     @IODispatcher private val dispatcher: CoroutineDispatcher,
 ) {
 
-    fun getUsers(): Flow<List<UserResponse>> = flow {
-        val users = picPayService.getUsers()
-        emit(users)
-    }.flowOn(dispatcher)
+    suspend fun getUsers(): List<UserResponse> = withContext(dispatcher) {
+        picPayService.getUsers()
+    }
 }
