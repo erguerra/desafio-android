@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.room)
 }
 
 android {
@@ -42,6 +43,10 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 }
 
 dependencies {
@@ -57,6 +62,11 @@ dependencies {
     // Dependency Injection
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
+
+    // Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
 
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.activity.ktx)
@@ -77,11 +87,17 @@ dependencies {
     implementation(libs.circleimageview)
 
     testImplementation(libs.junit)
-    testImplementation(libs.mockito.core)
+    testImplementation(libs.kotlin.test)
     testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.core.ktx.test)
     testImplementation(libs.core.testing)
+    testImplementation(libs.turbine)
 
     androidTestImplementation(libs.test.runner)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.core.ktx.test)
+    androidTestImplementation(libs.room.testing)
+    androidTestImplementation(libs.kotlin.test)
+    androidTestImplementation(libs.coroutines.test)
 }

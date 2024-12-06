@@ -1,18 +1,12 @@
 package com.picpay.desafio.android.domain.actions
 
-import com.picpay.desafio.android.data.repository.UsersRepository
 import com.picpay.desafio.android.domain.model.User
+import com.picpay.desafio.android.domain.repository.UserRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetUsers @Inject constructor(
-    private val repository: UsersRepository,
+    private val repository: UserRepository,
 ){
-    suspend operator fun invoke() : Result<List<User>> {
-        return try {
-            val users = repository.getUsers()
-            Result.success(users)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
-    }
+    operator fun invoke() : Flow<List<User>> = repository.getUsers()
 }
