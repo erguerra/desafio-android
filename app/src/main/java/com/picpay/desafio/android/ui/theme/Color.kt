@@ -4,14 +4,12 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
-// Define your colors
-val colorPrimary = Color(0xFF2B2C2F)
-val colorPrimaryDark = Color(0xFF1D1E20)
-val colorAccent = Color(0xFF11C76F)
-val colorPrimaryLight = Color(0xFFACB1BD)
-val colorDetail = Color(0x80FFFFFF)
+private val colorPrimary = Color(0xFF2B2C2F)
+private val colorPrimaryDark = Color(0xFF1D1E20)
+private val colorAccent = Color(0xFF11C76F)
+private val colorPrimaryLight = Color(0xFFACB1BD)
+private val colorDetail = Color(0x80FFFFFF)
 
-// Define light and dark color schemes
 val LightColorScheme = lightColorScheme(
     primary = colorPrimary,
     onPrimary = Color.White,

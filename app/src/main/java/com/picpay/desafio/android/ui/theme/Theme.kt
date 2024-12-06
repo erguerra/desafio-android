@@ -8,7 +8,7 @@ fun PicPayTheme(
     darkTheme: Boolean = true,
     content: @Composable () -> Unit,
 ) {
-    val colors = if(darkTheme) DarkColorScheme else LightColorScheme
+    val colors = if (darkTheme) DarkColorScheme else LightColorScheme
 
     MaterialTheme(
         colorScheme = colors,

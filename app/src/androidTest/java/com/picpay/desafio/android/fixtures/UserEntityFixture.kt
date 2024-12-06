@@ -4,7 +4,7 @@ import com.picpay.desafio.android.data.models.UserEntity
 
 interface UserEntityFixture {
 
-    fun userEntityList() : List<UserEntity> = listOf(
+    fun userEntityList(): List<UserEntity> = listOf(
         UserEntity(
             id = 1,
             name = "Sandrine Spinka",

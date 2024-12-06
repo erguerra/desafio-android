@@ -7,6 +7,6 @@ import javax.inject.Inject
 
 class GetUsers @Inject constructor(
     private val repository: UserRepository,
-){
-    operator fun invoke() : Flow<List<User>> = repository.getUsers()
+) {
+    operator fun invoke(): Flow<List<User>> = repository.getUsers()
 }

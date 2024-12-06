@@ -11,50 +11,46 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.pulltorefresh.pullToRefresh
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.room.util.TableInfo
 import com.picpay.desafio.android.R
-import com.picpay.desafio.android.domain.model.User
 import com.picpay.desafio.android.ui.theme.PicPayTheme
 import com.picpay.desafio.android.ui.theme.PicPayTypography
-import com.picpay.desafio.android.ui.theme.colorAccent
-import com.picpay.desafio.android.ui.theme.colorPrimaryDark
 import com.picpay.desafio.android.ui.userList.UserListViewModel
 
 @Composable
 fun UserListContent(
     modifier: Modifier = Modifier,
     viewState: UserListViewModel.ViewState,
-    refresh: () -> Unit = {},
-    retry: () -> Unit = {},
+    onRetry: () -> Unit,
 ) {
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(colorPrimaryDark)
+            .background(MaterialTheme.colorScheme.primaryContainer)
             .padding(vertical = 16.dp),
         contentAlignment = Alignment.TopCenter,
     ) {
         when (viewState) {
             is UserListViewModel.ViewState.Success -> LazyColumn(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(horizontal = 24.dp),
             ) {
                 item {
                     Text(
                         text = stringResource(R.string.title),
                         style = PicPayTypography.headlineLarge,
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onPrimary,
                     )
                     Spacer(modifier = Modifier.height(24.dp))
 
@@ -73,11 +69,41 @@ fun UserListContent(
                 modifier = Modifier
                     .align(Alignment.Center)
                     .padding(top = 8.dp, bottom = 8.dp),
-                color = colorAccent,
+                color = MaterialTheme.colorScheme.secondary,
             )
 
-            is UserListViewModel.ViewState.Retry -> Column {
-
+            is UserListViewModel.ViewState.Retry -> Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .fillMaxSize()
+                    .padding(24.dp),
+            ) {
+                Text(
+                    text = stringResource(R.string.error),
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                )
+                Spacer(modifier = Modifier.height(24.dp))
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    onClick = onRetry,
+                    colors = ButtonColors(
+                        containerColor = MaterialTheme.colorScheme.secondary,
+                        disabledContainerColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                        contentColor = MaterialTheme.colorScheme.secondary,
+                        disabledContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    )
+                ) {
+                    Text(
+                        text = stringResource(R.string.retry),
+                        style = MaterialTheme.typography.headlineSmall,
+                        maxLines = 1,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                    )
+                }
             }
         }
     }
@@ -92,6 +118,7 @@ fun UserListContentPreview(
     PicPayTheme {
         UserListContent(
             viewState = viewState,
+            onRetry = { }
         )
     }
 }

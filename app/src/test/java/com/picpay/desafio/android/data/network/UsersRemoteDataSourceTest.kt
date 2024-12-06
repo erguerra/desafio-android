@@ -3,9 +3,6 @@ package com.picpay.desafio.android.data.network
 import com.picpay.desafio.android.data.models.UserResponse
 import com.picpay.desafio.android.fixtures.UserFixture
 import com.picpay.desafio.android.rules.MainDispatcherRule
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.mockito.kotlin.doAnswer

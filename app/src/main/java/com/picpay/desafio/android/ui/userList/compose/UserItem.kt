@@ -27,8 +27,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import com.picpay.desafio.android.ui.theme.PicPayTheme
-import com.picpay.desafio.android.ui.theme.colorAccent
-import com.picpay.desafio.android.ui.theme.colorPrimaryDark
+
 
 @Composable
 fun UserItem(
@@ -40,7 +39,7 @@ fun UserItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(colorPrimaryDark)
+            .background(MaterialTheme.colorScheme.primaryContainer)
             .padding(vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -55,7 +54,7 @@ fun UserItem(
                             .padding(16.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        CircularProgressIndicator(color = colorAccent)
+                        CircularProgressIndicator(color = MaterialTheme.colorScheme.secondary)
                     }
                 },
                 error = {
@@ -68,14 +67,16 @@ fun UserItem(
                         Icon(
                             imageVector = Icons.Default.Face,
                             contentDescription = "Error",
-                            tint = colorAccent,
+                            tint = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.size(52.dp)
                         )
                     }
                 },
-                success =  {
+                success = {
                     SubcomposeAsyncImageContent(
-                        modifier = Modifier.fillMaxSize().clip(CircleShape)
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(CircleShape)
                     )
                 }
             )
@@ -83,7 +84,7 @@ fun UserItem(
 
         Spacer(modifier = Modifier.width(16.dp))
 
-        Column (
+        Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.weight(1f)
         ) {

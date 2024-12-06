@@ -5,7 +5,7 @@ import com.picpay.desafio.android.domain.model.User
 import com.picpay.desafio.android.data.models.UserResponse
 import javax.inject.Inject
 
-class UserMapper @Inject constructor(){
+class UserMapper @Inject constructor() {
 
     fun toDomain(userEntity: UserEntity): User = with(userEntity) {
         User(

@@ -16,18 +16,10 @@ fun UserListScreen() {
 
     UserListContent(
         viewState = state,
+        onRetry = viewModel::fetchUsers,
     )
 
-    EventHandler(viewModel)
-
-    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+    LifecycleEventEffect(Lifecycle.Event.ON_START) {
         viewModel.fetchUsers()
     }
-}
-
-@Composable
-private fun EventHandler(
-    viewModel: UserListViewModel,
-) {
-    // TODO: Handle refresh and retry
 }

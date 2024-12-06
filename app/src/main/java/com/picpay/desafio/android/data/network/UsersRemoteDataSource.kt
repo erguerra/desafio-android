@@ -1,14 +1,10 @@
 package com.picpay.desafio.android.data.network
 
-import com.picpay.desafio.android.di.IODispatcher
 import com.picpay.desafio.android.data.models.UserResponse
+import com.picpay.desafio.android.di.IODispatcher
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 class UsersRemoteDataSource @Inject constructor(
     private val picPayService: PicPayService,
