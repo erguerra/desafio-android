@@ -1,11 +1,10 @@
 package com.picpay.desafio.android.ui.userList.compose
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.compose.LifecycleEventEffect
 import com.picpay.desafio.android.ui.userList.UserListViewModel
 
 @Composable
@@ -19,7 +18,7 @@ fun UserListScreen() {
         onRetry = viewModel::fetchUsers,
     )
 
-    LifecycleEventEffect(Lifecycle.Event.ON_START) {
+    LaunchedEffect(viewModel) {
         viewModel.fetchUsers()
     }
 }

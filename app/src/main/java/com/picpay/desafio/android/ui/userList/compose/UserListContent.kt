@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.CircularProgressIndicator
@@ -40,11 +41,13 @@ fun UserListContent(
             .padding(vertical = 16.dp),
         contentAlignment = Alignment.TopCenter,
     ) {
+        val lazyListState = rememberLazyListState()
         when (viewState) {
             is UserListViewModel.ViewState.Success -> LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp),
+                state = lazyListState,
             ) {
                 item {
                     Text(
